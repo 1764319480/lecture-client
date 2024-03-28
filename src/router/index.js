@@ -8,6 +8,7 @@ const router = createRouter({
       path: '/',
       redirect: '/home'
     },
+    // 首页
     {
       path: '/home',
       name: 'home',
@@ -39,10 +40,17 @@ const router = createRouter({
         }
       ]
     },
+    // 登录页
     {
       path: '/login',
       name: 'login',
       component: () => import('@/views/LoginView.vue')
+    },
+    // 讲座详情页
+    {
+      path: '/lecture/:lec_id',
+      name: 'lecture',
+      component: () => import('@/views/DetailView.vue')
     },
     // 管理员页面
     {
