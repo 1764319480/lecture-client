@@ -18,7 +18,7 @@ function goDetail (lec_id) {
     <div id="page">
         <template v-for="(item) in lectures" :key="item.lec_id">
             <div id="content">
-                <div>
+                <div style="width: 40%;">
                     <h2>{{ item.lec_title }}</h2>
                 </div>
                 <div>
@@ -50,12 +50,9 @@ function goDetail (lec_id) {
     width: 100%;
     height: 10vh;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     border-bottom: 1px dashed;
 }
-#content div {
-    margin: 0 4px;
-    padding: 0 4px;
-}
+
 </style>
