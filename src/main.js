@@ -1,6 +1,4 @@
-// import './assets/main.css' // 原有的删。因为有导入
-import './assets/css/reset.css' // 这个重置样式自己找下
-// 如果有共用的加  common.css
+import './assets/css/reset.css' // 重置样式
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

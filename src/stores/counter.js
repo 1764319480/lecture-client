@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import headImg from '@/assets/img/user1.jpg';//测试头像，以后删
 import lecture1 from '@/resource/lecture1.png';//测试
@@ -10,12 +10,13 @@ import lecture4 from '@/resource/lecture4.jpg';//测试
 export const useUser = defineStore('user', () => {
   const user = ref({
     userImg: headImg,
-    userName: '11343245643',
-    userId: '100001',
-    userPwd: '12345abc',
+    userName: '15986906128',
+    // userId: '100001',
+    userPwd: '15986906128',
     lec_order: ['101101'],
     lec_finish: [],
-    lec_cancel: []
+    lec_cancel: [],
+    token: ''
   });
   function changeLecture (lecId) {
     if (this.user.lec_order.includes(lecId)) {
@@ -26,7 +27,7 @@ export const useUser = defineStore('user', () => {
     }
    
   }
-  return { user, changeLecture, };
+  return { user, changeLecture };
 })
 //讲座数据
 export const useLecture = defineStore('lecture', () => {
