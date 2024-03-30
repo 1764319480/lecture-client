@@ -55,6 +55,12 @@ const router = createRouter({
       name: 'login',
       component: () => import('@/views/LoginView.vue')
     },
+    // 搜索页
+    {
+      path: '/search',
+      name: 'search',
+      component: () => import('@/views/SearchView.vue')
+    },
     // 讲座详情页
     {
       path: '/lecture/:lec_id',

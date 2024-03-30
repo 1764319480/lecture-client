@@ -110,6 +110,24 @@ export const useLecture = defineStore('lecture', () => {
     technical: '科技',
     other: '其他'
   })
+  // 搜索讲座
+  function searchLecture (keyword) {
+    const searchLectures = [];
+    if (isNaN(Number(keyword))) {//为名称
+      for (let k of this.lectures) {
+        if (k.lec_title.includes(keyword)) {
+          searchLectures.push(k);
+        }
+      }
+    }else {//为编号
+      for (let k of this.lectures) {
+        if (k.lec_id == keyword) {
+          searchLectures.push(k);
+        }
+      }
+    }
+    return searchLectures;
+  }
   // 查询讲座详情
   function getLecture (lecId) {
     for (let k of this.lectures) {
@@ -137,5 +155,5 @@ export const useLecture = defineStore('lecture', () => {
       lec_id: '101106'
     },
   ]);
-  return { lectures, getLecture, lectureType, hotLecture };
+  return { lectures, getLecture, lectureType, hotLecture, searchLecture };
 })
