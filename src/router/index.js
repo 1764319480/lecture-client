@@ -13,6 +13,9 @@ const router = createRouter({
       path: '/home',
       name: 'home',
       component: HomeView,
+      meta: {
+        keepAlive: true
+      },
       children: [
         {
           path: '',
@@ -53,48 +56,85 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/LoginView.vue')
+      component: () => import('@/views/LoginView.vue'),
+      meta: {
+        keepAlive: false
+      }
     },
     // 搜索页
     {
       path: '/search',
       name: 'search',
-      component: () => import('@/views/SearchView.vue')
+      component: () => import('@/views/SearchView.vue'),
+      meta: {
+        keepAlive: false
+      }
     },
     // 讲座详情页
     {
-      path: '/lecture/:lec_id',
+      path: '/lecture',
       name: 'lecture',
-      component: () => import('@/views/DetailView.vue')
+      component: () => import('@/views/DetailView.vue'),
+      meta: {
+        keepAlive: false
+      }
     },
     // 管理员页面
     {
       path: '/super',
-      name: '/super',
-      component: () => import('@/views/SuperviseView.vue')
+      name: 'super',
+      component: () => import('@/views/SuperviseView.vue'),
+      meta: {
+        keepAlive: true
+      },
+      children: [
+        // 管理讲座
+        {
+          path: '/super/mlecture',
+          name: 'mlecture',
+          component: () => import('@/views/ManageLectures.vue'),
+          meta: {
+            keepAlive: false
+          },
+        }
+      ]
     },
     // 404页面
     {
       path: '/:pathMatch(.*)',
       name: 'err',
-      component: () => import('@/views/ErrorView.vue')
+      component: () => import('@/views/ErrorView.vue'),
+      meta: {
+        keepAlive: false
+      }
     }
   ]
-})
+});
 // 全局前置守卫
 router.beforeEach((to, from, next) => {
   const userData = useUser();
+  // console.log(from, to);
   if (to.path === '/login') {
     next();
     // console.log(1);
-  } else {
+  } 
+  else {
     if (sessionStorage.getItem('token')) {
       next();
       // console.log(2);
     } else {
-      next({ path: '/login'});
-      // console.log(3);
+      if (to.path === '/lecture') {
+        userData.setDetailPath(to.query.lec_id);
+        // console.log(to.query.lec_id);
+        next({ path: '/login'});
+      } else {
+        next({ path: '/login'});
+        // console.log(3);
+      }
+        
     }   
-  }
-})
+  };
+  
+});
+
 export default router

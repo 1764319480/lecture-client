@@ -1,5 +1,5 @@
 import './assets/css/reset.css' // 重置样式
-
+import 'element-plus/dist/index.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
