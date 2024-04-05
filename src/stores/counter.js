@@ -10,23 +10,26 @@ import axios from '@/utils/request.js';
  // 普通用户数据
 export const useUser = defineStore('user', () => {
   // 用户信息
-  const user = ref({
-    userImg: headImg,
-    userName: '15986906128',
-    // userId: '100001',
-    userPwd: '15986906128',
-    lec_order: ['101103', '101105'],
-    lec_finish: ['101107'],
-    lec_timeout: ['101102'],
-    token: '20abcdefg'
-  });
+  const user = ref();
+  // 清除信息
+  function clear () {
+    this.user = {};
+  }
   //登录
   async function login (userName, userPwd) {
+    // console.log(userName, userPwd);
     const res = await axios.post('/api/login', {
       userName,
       userPwd
     });
-  console.log(res.data);
+    // console.log(res.data)
+    if (res.data.hasOwnProperty('error')) {
+      // console.log(res.data.error)
+      return res.data.error;
+    } else {
+      this.user = {...(res.data)};
+      return 1;
+    }
   }
   // 注册，功能后续调后端
   function setUser (account, pwd) {
@@ -65,8 +68,12 @@ export const useUser = defineStore('user', () => {
       
     }
   }
-  return { user, changeLecture, changeHeadImg, detailPath, setDetailPath, changePwd, setUser, login};
-})
+  return { clear, user, changeLecture, changeHeadImg, detailPath, setDetailPath, changePwd, setUser, login};
+}, 
+{
+  persist: true,
+}
+)
 
 //讲座数据
 export const useLecture = defineStore('lecture', () => {
