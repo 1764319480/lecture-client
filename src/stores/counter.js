@@ -15,6 +15,13 @@ export const useUser = defineStore('user', () => {
   function clear () {
     this.user = {};
   }
+  // 修改头像
+  // async function changeHeadImg (headImg) {
+  //   const res = await axios.post('/api/changeHead', {
+  //     headImg
+  //   })
+  //   console.log(res.data);
+  // }
   //登录
   async function login (userName, userPwd) {
     // console.log(userName, userPwd);
@@ -32,22 +39,42 @@ export const useUser = defineStore('user', () => {
     }
   }
   // 注册，功能后续调后端
-  function setUser (account, pwd) {
-    this.user.userName = account;
-    this.user.userPwd = pwd;
+  async function logon (userName, userPwd) {
+    await axios.post('/api/logon', {
+      userName,
+      userPwd
+    });
   }
+  
   // 登录页直接跳转到详情页
   const detailPath = ref();
   function setDetailPath (query_id) {
     this.detailPath = query_id;
   }
-  // 修改头像
-  function changeHeadImg (imgSrc) {
-    this.user.userImg = imgSrc;
+  // 判断用户是否存在
+  async function isLogon (userName) {
+    const res = await axios.post('/api/isLogon', {
+      userName
+    });
+    console.log(res);
+    if (res.data.hasOwnProperty('error')) {
+      return res.data.error;
+    } else {
+      return res.data.message;
+    }
   }
   // 修改密码
-  function changePwd (pwd) {
-    this.user.userPwd = pwd;
+  async function changePwd (userName, userPwd) {
+    const res = await axios.post('/api/changePwd', {
+      userName,
+      userPwd
+    });
+    if (res.data.hasOwnProperty('error')) {
+      // console.log(res.data.error)
+      return res.data.error;
+    } else {
+      return 1;
+    }
   }
   // 预约或取消
   function changeLecture (lecId) {
@@ -68,7 +95,7 @@ export const useUser = defineStore('user', () => {
       
     }
   }
-  return { clear, user, changeLecture, changeHeadImg, detailPath, setDetailPath, changePwd, setUser, login};
+  return { logon, isLogon, clear, user, changeLecture, detailPath, setDetailPath, changePwd, login};
 }, 
 {
   persist: true,
