@@ -1,6 +1,6 @@
 <script setup>
 import router from "@/router";
-import { useUser } from "@/stores/counter";
+import { useUser } from "@/stores/user";
 
 const userData = useUser();
 const props = defineProps({
