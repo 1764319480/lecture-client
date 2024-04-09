@@ -42,10 +42,9 @@ export const useLecture = defineStore('lecture', () => {
     function orderLecture (lecId, userName) {
       for (let k in this.lectures) {
         if (this.lectures[k].lec_id == lecId) {
-          if (this.lectures[k].lec_people.length < this.lectures[k].lec_num) {
             this.lectures[k].lec_people.push(userName);
+            this.lectures[k].lec_length++;
             return true;
-          }
         }
       }
       return false;
@@ -55,6 +54,7 @@ export const useLecture = defineStore('lecture', () => {
       for (let k in this.lectures) {
         if (this.lectures[k].lec_id == lecId) {
           this.lectures[k].lec_people = this.lectures[k].lec_people.filter(item => item != userName);
+          this.lectures[k].lec_length--;
           return true;
         } 
       }

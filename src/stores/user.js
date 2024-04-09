@@ -2,6 +2,7 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import axios from '@/utils/request.js';
 import { useLecture } from '@/stores/lecture';
+import { ElMessage } from 'element-plus';
 
  // 普通用户数据
  export const useUser = defineStore('user', () => {
@@ -76,25 +77,56 @@ import { useLecture } from '@/stores/lecture';
       }
     }
     // 预约或取消
-    function changeLecture (lecId) {
+    async function changeLecture (lec_id) {
       const lectureData = useLecture();
-      if (this.user.lec_order.includes(lecId)) {
-        if (lectureData.cancelLecture(lecId, this.user.userName)) {
-          this.user.lec_order = this.user.lec_order.filter(item => item != lecId);
+      if (this.user.lec_order.includes(lec_id)) {
+        // 取消讲座
+        const res = await axios.post('/api/cancelLecture', {
+          userName: this.user.userName,
+          lec_id
+        });
+        if (res.data.hasOwnProperty('error')) {
+          ElMessage(res.data.error);
         } else {
-          alert('取消失败');
-        }      
+          this.user.lec_order = this.user.lec_order.filter(item => item != lec_id);
+          lectureData.cancelLecture(lec_id, this.user.userName);
+          ElMessage('取消成功');
+        }
       }
       else {
-        if (lectureData.orderLecture(lecId, this.user.userName)) {
-          this.user.lec_order.push(lecId);
+        // 预约讲座
+        const res = await axios.post('/api/orderLecture', {
+          userName: this.user.userName,
+          lec_id
+        });
+        if (res.data.hasOwnProperty('error')) {
+          ElMessage(res.data.error);
         } else {
-          alert('预约失败');
+          this.user.lec_order.push(lec_id);
+          lectureData.orderLecture(lec_id, this.user.userName);
+          // lectureData
+          ElMessage('预约成功');
         }
         
       }
     }
-    return { logon, isLogon, clear, user, changeLecture, detailPath, setDetailPath, changePwd, login};
+    // 签到
+    async function toSign (lec_id, lec_sign) {
+      const res = await axios.post('/api/signing', {
+        userName: this.user.userName,
+        lec_id,
+        lec_sign
+      });
+      if (res.data.hasOwnProperty('error')) {
+        ElMessage(res.data.error);
+      } else {
+        this.user.lec_order = this.user.lec_order.filter(item => item != lec_id);
+        this.user.lec_finish.push(lec_id);
+        ElMessage('签到成功');
+        return true;
+      }
+    }
+    return { toSign, logon, isLogon, clear, user, changeLecture, detailPath, setDetailPath, changePwd, login};
   }, 
   {
     persist: true,
