@@ -88,15 +88,65 @@ const router = createRouter({
         keepAlive: true
       },
       children: [
-        // 管理讲座
         {
-          path: '/super/mlecture',
-          name: 'mlecture',
-          component: () => import('@/views/ManageLectures.vue'),
+          path: '',
+          name: 'empty',
+          redirect: '/super/welcome'
+        },
+        // 欢迎页
+        {
+          path: '/super/welcome',
+          name: 'welcome',
+          component: () => import('@/views/WelcomeManager.vue'),
           meta: {
             keepAlive: false
           },
-        }
+        },
+        // 添加讲座
+        {
+          path: '/super/addLecture',
+          name: 'addlecture',
+          component: () => import('@/views/AddLecture.vue'),
+          meta: {
+            keepAlive: false
+          },
+        },
+        // 删除讲座
+        {
+          path: '/super/removeLecture',
+          name: 'removelecture',
+          component: () => import('@/views/RemoveLecture.vue'),
+          meta: {
+            keepAlive: false
+          },
+        },
+        // 修改讲座
+        {
+          path: '/super/changeLecture',
+          name: 'changelecture',
+          component: () => import('@/views/ChangeLecture.vue'),
+          meta: {
+            keepAlive: false
+          },
+        },
+        // 轮播图管理
+        {
+          path: '/super/carousel',
+          name: 'carousel',
+          component: () => import('@/views/Carousel.vue'),
+          meta: {
+            keepAlive: false
+          },
+        },
+        // 修改密码
+        {
+          path: '/super/changepwd',
+          name: 'changepwd',
+          component: () => import('@/views/ChangePwd.vue'),
+          meta: {
+            keepAlive: false
+          },
+        },
       ]
     },
     // 404页面
@@ -117,8 +167,13 @@ router.beforeEach((to, from, next) => {
   if (to.path === '/login') {
     next();
     // console.log(1);
-  } 
-  else {
+  } else if (to.path.startsWith('/super')) {
+    if (sessionStorage.getItem('supertoken')) {
+      next();
+    } else {
+      next({ path: '/login' });
+    }
+  } else {
     if (sessionStorage.getItem('token')) {
       next();
       // console.log(2);
@@ -126,15 +181,15 @@ router.beforeEach((to, from, next) => {
       if (to.path === '/lecture') {
         userData.setDetailPath(to.query.lec_id);
         // console.log(to.query.lec_id);
-        next({ path: '/login'});
+        next({ path: '/login' });
       } else {
-        next({ path: '/login'});
+        next({ path: '/login' });
         // console.log(3);
       }
-        
-    }   
+
+    }
   };
-  
+
 });
 
 export default router

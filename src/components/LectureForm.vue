@@ -1,5 +1,32 @@
 <script setup>
-import { ref } from 'vue';
+import { ElMessage } from 'element-plus';
+import { onBeforeMount, ref } from 'vue';
+import { useManager } from '@/stores/manager';
+const managerData = new useManager();
+const props = defineProps({
+    alecture: {
+        type: Object,
+        default: () => { }
+    }
+});
+
+onBeforeMount(() => {
+    // console.log(props.alecture)
+    if (Object.keys(props.alecture).length != 0) {
+        lectures.value.lec_title = props.alecture?.lec_title;
+        lectures.value.lec_id = props.alecture?.lec_id;
+        lectures.value.lec_master = props.alecture?.lec_master;
+        lectures.value.lec_time = props.alecture?.lec_time;
+        lectures.value.lec_place = props.alecture?.lec_place;
+        lectures.value.lec_detail = props.alecture?.lec_detail;
+        lectures.value.lec_type = props.alecture?.lec_type;
+        lectures.value.lec_status = props.alecture?.lec_status;
+        lectures.value.lec_num = props.alecture?.lec_num;
+        lectures.value.lec_people = props.alecture?.lec_people;
+        lectures.value.lec_sign = props.alecture?.lec_sign;
+        lectures.value.lec_length = props.alecture?.lec_length;
+    }
+})
 const lectureType = ref([
     {
         value: 'culture',
@@ -30,7 +57,7 @@ const lectureType = ref([
         label: '其他'
     }
 ]);
-const lectureStatus =ref([
+const lectureStatus = ref([
     {
         value: '1',
         label: '报名中',
@@ -55,8 +82,80 @@ const lectures = ref({
     lec_status: '',
     lec_num: '',
     lec_people: '',
-    lec_sign: ''
+    lec_sign: '',
+    lec_length: 0
 })
+// 提交内容
+async function submitContent(e) {
+    if (lectures.value.lec_title == '') {
+        ElMessage('标题不能为空');
+        return;
+    };
+    if (lectures.value.lec_id == '') {
+        ElMessage('编号不能为空');
+        return;
+    };
+    if (lectures.value.lec_master == '') {
+        ElMessage('举办方不能为空');
+        return;
+    };
+    if (lectures.value.lec_time == '') {
+        ElMessage('时间不能为空');
+        return;
+    };
+    if (lectures.value.lec_place == '') {
+        ElMessage('地点不能为空');
+        return;
+    };
+    if (lectures.value.lec_detail == '') {
+        ElMessage('介绍不能为空');
+        return;
+    };
+    if (lectures.value.lec_type == '') {
+        ElMessage('类型不能为空');
+        return;
+    };
+    if (lectures.value.lec_status == '') {
+        ElMessage('状态不能为空');
+        return;
+    };
+    if (lectures.value.lec_num == '') {
+        ElMessage('座位数不能为空');
+        return;
+    };
+    if (lectures.value.lec_sign == '') {
+        ElMessage('签到码不能为空');
+        return;
+    };
+    lectures.value.lec_people = lectures.value.lec_people.split(',');
+    lectures.value.lec_length = lectures.value.lec_people.length;
+    if (e.target.innerText == '添加') {
+        const res = await managerData.addLecture(lectures.value);
+        if (res) {
+            reset();
+        }
+    } else
+        if (e.target.innerText == '修改') {
+            await managerData.modifyLecture(lectures.value);
+        } else {
+            return;
+        }
+}
+// 重置
+function reset() {
+    lectures.value.lec_title = '';
+    lectures.value.lec_id = '';
+    lectures.value.lec_master = '',
+        lectures.value.lec_time = '',
+        lectures.value.lec_place = '',
+        lectures.value.lec_detail = '',
+        lectures.value.lec_type = '',
+        lectures.value.lec_status = '',
+        lectures.value.lec_num = '',
+        lectures.value.lec_people = [],
+        lectures.value.lec_sign = '',
+        lectures.value.lec_length = 0
+}
 </script>
 
 <template>
@@ -75,7 +174,8 @@ const lectures = ref({
         </div>
         <div>
             <label>举办时间:</label>
-            <el-input v-model="lectures.lec_time" style="width: 50vw; height: 6vh;" placeholder="日期格式20xx-xx-xx-xx:xx~xx:xx" />
+            <el-input v-model="lectures.lec_time" style="width: 50vw; height: 6vh;"
+                placeholder="日期格式20xx-xx-xx-xx:xx~xx:xx" />
         </div>
         <div>
             <label>举办地点:</label>
@@ -109,11 +209,17 @@ const lectures = ref({
             <label>签到码:</label>
             <el-input v-model="lectures.lec_sign" style="width: 50vw; height: 6vh;" placeholder="请输入签到码" />
         </div>
+        <div>
+            <!-- 后期定制 -->
+            <el-button type="primary" @click="reset">重置</el-button>
+            <el-button type="primary" @click="submitContent">
+                <slot>确认</slot>
+            </el-button>
+        </div>
     </div>
 </template>
 
 <style scoped>
-
 #page1>div {
     width: 60vw;
     height: 8vh;

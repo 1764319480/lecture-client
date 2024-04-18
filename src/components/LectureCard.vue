@@ -5,7 +5,7 @@ import { ref } from "vue";
 
 const userData = useUser();
 const props = defineProps({
-    lectures: Array
+    lectures: Array,
 });
 // 详情跳转
 function goDetail(lec_id) {
@@ -65,7 +65,7 @@ function confirmOrder() {
                         || userData.user.lec_timeout?.includes(item.lec_id) ? '已预约' : '预约' }}
                         <!-- <p v-text="userData.user.lec_order.includes(item.lec_id)?'已预约':'预约'"></p> -->
                     </el-button>
-                    <el-dialog v-model="centerDialogVisible1" title="温馨提示" width="500" center>
+                    <el-dialog v-model="centerDialogVisible1" title="温馨提示" width="500" :modal="false" center>
                         <span>
                             {{ userData.user.lec_order?.includes(orderLecId)
                                 || userData.user.lec_finish?.includes(orderLecId)
@@ -105,4 +105,5 @@ function confirmOrder() {
     align-items: center;
     border-bottom: 1px dashed;
 }
+
 </style>
