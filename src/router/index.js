@@ -85,7 +85,7 @@ const router = createRouter({
       name: 'super',
       component: () => import('@/views/SuperviseView.vue'),
       meta: {
-        keepAlive: true
+        keepAlive: false
       },
       children: [
         {

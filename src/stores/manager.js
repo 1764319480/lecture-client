@@ -13,6 +13,7 @@ export const useManager = defineStore('manager', () => {
   function clear () {
     this.manager.name = '';
     this.manager.supertoken = '';
+    this.carousel = '';
   }
   // 管理员列表
   const list = ref([]);
@@ -115,7 +116,40 @@ export const useManager = defineStore('manager', () => {
       return true;
     }
   }
-  return { clear, modifyPwd, modifyLecture, removeLecture, findLecture, addLecture, manager, list, getManagerList, login };
+  // 获取轮播图
+  const carousel = ref();
+  async function getCarousel () {
+    const res = await axios.get('/api/getCarousel');
+    this.carousel = res.data;
+  }
+  // 删除图片
+  async function deleteCarousel (lec_id) {
+    const res = await axios.post('/api/deleteCarousel', {
+      lec_id
+    });
+    if (res.data.hasOwnProperty('error')) {
+      ElMessage(res.data.error);
+      return false;
+    } else {
+      ElMessage(res.data.message);
+      return true;
+    }
+  }
+  // 添加图片
+  async function addCarousel (lec_id, img) {
+    const res = await axios.post('/api/addCarousel', {
+      lec_id,
+      img
+    });
+    if (res.data.hasOwnProperty('error')) {
+      ElMessage(res.data.error);
+      return false;
+    } else {
+      ElMessage(res.data.message);
+      return true;
+    }
+  }
+  return { addCarousel, deleteCarousel, carousel, getCarousel, clear, modifyPwd, modifyLecture, removeLecture, findLecture, addLecture, manager, list, getManagerList, login };
 },
   {
     persist: true,
