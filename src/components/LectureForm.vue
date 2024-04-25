@@ -127,8 +127,12 @@ async function submitContent(e) {
         ElMessage('签到码不能为空');
         return;
     };
-    lectures.value.lec_people = lectures.value.lec_people.split(',');
-    lectures.value.lec_length = lectures.value.lec_people.length;
+    if (lectures.value.lec_people != '') {
+        lectures.value.lec_people = lectures.value.lec_people.toString().split(',');
+        lectures.value.lec_length = lectures.value.lec_people.length;
+    } else {
+        lectures.value.lec_people = [];
+    }
     if (e.target.innerText == '添加') {
         const res = await managerData.addLecture(lectures.value);
         if (res) {
