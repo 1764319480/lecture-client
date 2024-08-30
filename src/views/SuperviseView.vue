@@ -100,7 +100,7 @@ const handleNodeClick = (tree) => {
       <span id="manargerName" style="font-size: 2vw;">{{ managerData.manager.name }}</span>
     </div>
     <div id="titleName">
-      <h1>后台管理系统</h1>
+      <h1 style="font-family: fangsong;">后台管理系统</h1>
     </div>
     <div id="tools">
       <el-tree style="max-width: 600px" :data="tree" :props="defaultProps" @node-click="handleNodeClick" />
@@ -141,11 +141,12 @@ const handleNodeClick = (tree) => {
 
 /* 管理员信息 */
 #managerInfo {
-  background-color: rgb(110, 110, 194);
+  /* background-color: rgb(110, 110, 194); */
   border-bottom: 1px solid;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* border-right: 1px solid black; */
 }
 
 #manegerInfo span {
@@ -156,9 +157,12 @@ const handleNodeClick = (tree) => {
 
 /* 标题 */
 #titleName {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   border-bottom: 1px solid;
-  background-color: rgb(108, 144, 226);
+  /* background-color: rgb(108, 144, 226); */
 }
 
 /* 功能区 */

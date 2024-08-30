@@ -40,7 +40,10 @@ async function changePwd() {
 
 <template>
     <div id="page">
+        <br>
         <h1>修改密码</h1>
+        <!-- <hr> -->
+        <br>
         <div id="content">
             <div>
                 <label>密码：&nbsp;&nbsp;&nbsp;&nbsp;</label>

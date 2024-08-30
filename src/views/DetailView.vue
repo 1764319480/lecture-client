@@ -70,11 +70,15 @@ async function checkSign () {
 <template>
     <div id="page">
         <div id="content">
-            <div id="title">
-                <a href="#" style="text-decoration: none;" @click="goback">
+            <br>
+            <a href="#" style="text-decoration: none;" @click="goback">
                     <p style="font-size: 4vh;">&larr;返回</p>
                 </a>
-                <h3 style="text-align: center; font-size: 5vh;">详情</h3>
+                <br>
+                <hr>
+            <div id="title">
+                
+                <h3 style="text-align: center; font-size: 5vh;">讲座详情</h3>
                 <div></div>
             </div>
             <br>
@@ -167,7 +171,7 @@ async function checkSign () {
 #content {
     width: 70%;
     height: 100%;
-    background-color: rgb(170, 222, 166);
+    background-color: rgb(227, 231, 227);
     padding: 0 20px;
     /* display: flex; */
     /* flex-direction: column; */

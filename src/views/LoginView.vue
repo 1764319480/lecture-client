@@ -185,10 +185,12 @@ function changePwd() {
 
 <template>
     <div id="login">
-        <h1>高校讲座预约系统</h1>
+        <!-- <h1>高校讲座预约系统</h1> -->
+        <div id="left"></div>
         <div id="loginForm" v-show="status">
             <div v-show="status2">
                 <h2 style="text-align: center;">登录</h2>
+                <br>
                 <form action="">
                     账号：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-input v-model="oldAccount" style="width: 20vw"
                         placeholder="请输入手机号" clearable />
@@ -205,15 +207,23 @@ function changePwd() {
                     <br>
                     <el-button type="primary" style="width: 100%" @click="login">登录</el-button>
                 </form>
+                <br>
+                <hr>
+                <ul style="list-style: inside; font-size: 2vh; color: grey;">
+                    <li>请使用11位号码进行登录或注册。</li>
+                    <li>若忘记密码，可通过验证码方式找回。</li>
+                </ul>
+                                     
             </div>
             <div v-show="!status2">
                 <h2 style="text-align: center;">修改密码</h2>
+                <br>
                 <form action="">
                     账号：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-input v-model="oldAccount" style="width: 20vw"
                         placeholder="请输入手机号" clearable />
                     <br><br>
                     <div style="position: relative; display: flex; align-items: center;">
-                        验证码：&nbsp;&nbsp;&nbsp;&nbsp;<el-input v-model="idCode" style="width: 20vw"
+                        验证码：&nbsp;&nbsp;&nbsp;<el-input v-model="idCode" style="width: 20vw"
                             placeholder="请输入验证码"></el-input>
                         <a href="JavaScript: ;" @click="sendIdCode('修改密码')"
                             style=" text-decoration: none; font-size: 1vw; position: absolute; right: 4px;">{{ timeText
@@ -236,12 +246,13 @@ function changePwd() {
         </div>
         <div id="loginForm" v-show="!status">
             <h2 style="text-align: center;">注册</h2>
+            <br>
             <form action="">
                 账号：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-input v-model="newAccount" style="width: 20vw"
                     placeholder="请输入手机号" clearable />
                 <br><br>
                 <div style="position: relative; display: flex; align-items: center;">
-                    验证码：&nbsp;&nbsp;&nbsp;&nbsp;<el-input v-model="idCode" style="width: 20vw"
+                    验证码：&nbsp;&nbsp;&nbsp;<el-input v-model="idCode" style="width: 20vw"
                         placeholder="请输入验证码"></el-input>
                     <a href="JavaScript: ;" @click="sendIdCode('注册')"
                         style=" text-decoration: none; font-size: 1vw; position: absolute; right: 4px;">{{ timeText
@@ -270,24 +281,30 @@ function changePwd() {
 h1 {
     font-style: italic;
 }
-
+#left {
+    width: 20vw;
+    height: 52vh;
+    padding: 10px;
+    background-image: url("@/assets/img/login_left.png");
+}
 #loginForm {
 
     background-color: white;
     width: max-content;
+    height: 52vh;
     padding: 10px;
-    border-radius: 5px;
+    /* border-radius: 5px; */
 }
 
 #login {
     width: 100%;
     height: 100%;
     background-size: 100% 100%;
-    background-image: url("@/assets/img/login.jpg");
-    overflow: hidden;
+    background-image: url("@/assets/img/login1.jpg");
+    overflow: visible;
     background-repeat: no-repeat;
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: center;
     align-items: center;
 }

@@ -35,7 +35,8 @@ onBeforeMount(() => {
         <el-button type="danger" style="width: 20%; height: 100%;" @click="search(keyword)">搜索</el-button>
       </div>
     </div>
-    <br>
+    <!-- <br> -->
+    <hr>
     <!--轮播图-->
     <div>
       <el-carousel :interval="4000" type="card" height="200px">
@@ -45,8 +46,10 @@ onBeforeMount(() => {
         </el-carousel-item>
       </el-carousel>
     </div>
+    <hr>
     <br>
     <h3>大家都在看：</h3>
+    <br>
     <!-- 热门讲座 -->
     <div id="someLecture">
       <Card :lectures="lectures"></Card>

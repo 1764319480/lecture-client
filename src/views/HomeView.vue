@@ -7,7 +7,7 @@
     <el-backtop :right="100" :bottom="100" />
     <!-- 顶部导航栏 -->
     <div id="nav-bottom">
-      <p>高校讲座预约系统</p>
+      <p style="font-family: fangsong;">高校讲座预约系统</p>
       <div>
         <router-link to="/home/page" style="text-decoration: none;">首页</router-link>
         <router-link to="/home/sort" style="text-decoration: none;">分类</router-link>
@@ -39,11 +39,15 @@
 
 /* 顶部导航菜单 */
 #nav-bottom {
+  position: sticky;
+  top: 0;
+  z-index: 99;
   width: 70%;
   height: 8%;
   background-color: rgb(228, 213, 216);
   display: flex;
   justify-content: space-between;
+  border-bottom: 2px solid white;
 }
 
 #nav-bottom div {
