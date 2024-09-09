@@ -185,7 +185,7 @@ function changePwd() {
 
 <template>
     <div id="login">
-        <!-- <h1>高校讲座预约系统</h1> -->
+        <p style="color: white;position: fixed;top: 5vw;text-align: center;font-size: 7vmin;font-family: cursive;">高校讲座预约系统</p>
         <div id="left"></div>
         <div id="loginForm" v-show="status">
             <div v-show="status2">
@@ -300,7 +300,7 @@ h1 {
     width: 100%;
     height: 100%;
     background-size: 100% 100%;
-    background-image: url("@/assets/img/login1.jpg");
+    background-image: url("@/assets/img/login5.jpg");
     overflow: visible;
     background-repeat: no-repeat;
     display: flex;
