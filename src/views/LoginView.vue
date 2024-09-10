@@ -1,5 +1,5 @@
 <script setup>
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, onMounted, ref } from 'vue';
 import { useUser } from '@/stores/user';
 import { useManager } from '@/stores/manager';
 import router from '@/router';
@@ -51,7 +51,7 @@ const login = async () => {
             } else {
                 setTimeout(() => {
                     router.push('/home/page');
-                }, 1000);               
+                }, 1000);
             }
         } else {
             ElMessage(data);
@@ -181,11 +181,37 @@ function changePwd() {
     })
 
 }
+//批量添加enter点击事件
+onMounted(() => {
+    function keyEnter() {
+        const inputs = document.querySelectorAll('form input');
+        inputs.forEach(node => {
+            node.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    if(status.value === true && status2.value === true) {
+                       login();
+                       return;
+                    }
+                    if(status.value === true && status2.value ===false) {
+                        changePwd();
+                        return;
+                    }
+                    if(status.value === false) {
+                        logon();
+                        return;
+                    }
+                }
+            })
+        })
+    }
+    keyEnter();
+})
 </script>
 
 <template>
     <div id="login">
-        <p style="color: white;position: fixed;top: 5vw;text-align: center;font-size: 7vmin;font-family: cursive;">高校讲座预约系统</p>
+        <p style="color: white;position: fixed;top: 5vw;text-align: center;font-size: 7vmin;font-family: cursive;">
+            高校讲座预约系统</p>
         <div id="left"></div>
         <div id="loginForm" v-show="status">
             <div v-show="status2">
@@ -213,7 +239,7 @@ function changePwd() {
                     <li>请使用11位号码进行登录或注册。</li>
                     <li>若忘记密码，可通过验证码方式找回。</li>
                 </ul>
-                                     
+
             </div>
             <div v-show="!status2">
                 <h2 style="text-align: center;">修改密码</h2>
@@ -281,12 +307,14 @@ function changePwd() {
 h1 {
     font-style: italic;
 }
+
 #left {
     width: 20vw;
     height: 52vh;
     padding: 10px;
     background-image: url("@/assets/img/login_left.png");
 }
+
 #loginForm {
 
     background-color: white;
