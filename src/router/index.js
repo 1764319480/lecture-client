@@ -6,12 +6,12 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/home'
+      redirect: '/home/page'
     },
     // 首页
     {
       path: '/home',
-      name: 'home',
+      // name: 'home',
       component: HomeView,
       meta: {
         keepAlive: true
@@ -19,7 +19,7 @@ const router = createRouter({
       children: [
         {
           path: '',
-          name: 'empty',
+          name: 'home',
           redirect: '/home/page'
         },
         {
@@ -27,7 +27,7 @@ const router = createRouter({
           name: 'page',
           component: () => import('@/views/Page.vue'),
           meta: {
-            keepAlive: true
+            keepAlive: false
           }
         },
         {

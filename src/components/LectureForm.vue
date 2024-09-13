@@ -9,10 +9,12 @@ const props = defineProps({
         default: () => { }
     }
 });
-
+// 用来表示表单原始状态，true为有数据，false为无
+let status = false;
 onBeforeMount(() => {
     // console.log(props.alecture)
     if (Object.keys(props.alecture).length != 0) {
+        status = true;
         lectures.value.lec_title = props.alecture?.lec_title;
         lectures.value.lec_id = props.alecture?.lec_id;
         lectures.value.lec_master = props.alecture?.lec_master;
@@ -25,6 +27,9 @@ onBeforeMount(() => {
         lectures.value.lec_people = props.alecture?.lec_people;
         lectures.value.lec_sign = props.alecture?.lec_sign;
         lectures.value.lec_length = props.alecture?.lec_length;
+    }
+    else {
+        status = false;
     }
 })
 const lectureType = ref([
@@ -59,15 +64,15 @@ const lectureType = ref([
 ]);
 const lectureStatus = ref([
     {
-        value: '1',
+        value: 1,
         label: '报名中',
     },
     {
-        value: '0',
+        value: 0,
         label: '进行中',
     },
     {
-        value: '-1',
+        value: -1,
         label: '已完结',
     }
 ])
@@ -147,18 +152,35 @@ async function submitContent(e) {
 }
 // 重置
 function reset() {
-    lectures.value.lec_title = '';
-    lectures.value.lec_id = '';
-    lectures.value.lec_master = '',
-        lectures.value.lec_time = '',
-        lectures.value.lec_place = '',
-        lectures.value.lec_detail = '',
-        lectures.value.lec_type = '',
-        lectures.value.lec_status = '',
-        lectures.value.lec_num = '',
-        lectures.value.lec_people = [],
-        lectures.value.lec_sign = '',
-        lectures.value.lec_length = 0
+    if (status) {//重置讲座初始状态
+        lectures.value.lec_title = props.alecture?.lec_title;
+        lectures.value.lec_id = props.alecture?.lec_id;
+        lectures.value.lec_master = props.alecture?.lec_master;
+        lectures.value.lec_time = props.alecture?.lec_time;
+        lectures.value.lec_place = props.alecture?.lec_place;
+        lectures.value.lec_detail = props.alecture?.lec_detail;
+        lectures.value.lec_type = props.alecture?.lec_type;
+        lectures.value.lec_status = props.alecture?.lec_status;
+        lectures.value.lec_num = props.alecture?.lec_num;
+        lectures.value.lec_people = props.alecture?.lec_people;
+        lectures.value.lec_sign = props.alecture?.lec_sign;
+        lectures.value.lec_length = props.alecture?.lec_length;
+    }
+    else {//清空填写信息
+        lectures.value.lec_title = '';
+        lectures.value.lec_id = '';
+        lectures.value.lec_master = '',
+            lectures.value.lec_time = '',
+            lectures.value.lec_place = '',
+            lectures.value.lec_detail = '',
+            lectures.value.lec_type = '',
+            lectures.value.lec_status = '',
+            lectures.value.lec_num = '',
+            lectures.value.lec_people = [],
+            lectures.value.lec_sign = '',
+            lectures.value.lec_length = 0
+    }
+
 }
 </script>
 
