@@ -31,3 +31,9 @@ npm run dev
 ```sh
 npm run build
 ```
+### Deploy the packaged Folder dist to the local server
+
+```sh
+npm run build
+node http
+```
