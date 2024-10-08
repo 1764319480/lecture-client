@@ -41,6 +41,25 @@ function confirmOrder() {
     userData.changeLecture(orderLecId.value);
     orderLecId.value = '';
 }
+// 按钮颜色动态变化
+const btn_color = (lec_id) => {
+  if (userData.user.lec_order.includes(lec_id)
+    || userData.user.lec_finish.includes(lec_id))
+    return 'success';
+  else if (userData.user.lec_timeout.includes(lec_id))
+    return 'danger';
+  else return 'primary';
+}
+// 按钮文字动态变化
+const btn_text = (lec_id) => {
+  if (userData.user.lec_order.includes(lec_id))
+    return '已预约';
+  else if (userData.user.lec_finish.includes(lec_id))
+    return '已完成';
+  else if (userData.user.lec_timeout.includes(lec_id))
+    return '已超时';
+  else return '预约';
+}
 </script>
 
 <template>
@@ -57,12 +76,10 @@ function confirmOrder() {
                 <div>
                     <el-button type="primary" @click="goDetail(item.lec_id)"
                         style="width: 4.5vw; font-size: 1.5vw;">详情</el-button>
-                    <el-button :type="userData.user.lec_order?.includes(item.lec_id) ? '' : 'primary'"
+                    <el-button :type="btn_color(item.lec_id)"
                         @click="tochoose(item.lec_id)" :disabled="item.lec_status == 1 ? false : true"
                         style="width: 4.5vw; font-size: 1.5vw;">
-                        {{ userData.user.lec_order?.includes(item.lec_id)
-                        || userData.user.lec_finish?.includes(item.lec_id)
-                        || userData.user.lec_timeout?.includes(item.lec_id) ? '已预约' : '预约' }}
+                        {{ btn_text(item.lec_id) }}
                         <!-- <p v-text="userData.user.lec_order.includes(item.lec_id)?'已预约':'预约'"></p> -->
                     </el-button>
                     <el-dialog v-model="centerDialogVisible1" title="温馨提示" width="500" :modal="false" center>
@@ -95,15 +112,19 @@ function confirmOrder() {
     height: auto;
     border: 1px solid;
     border-bottom: none;
+    /* background-color: rgb(215, 211, 211) */
 }
 
 #content {
-    width: 100%;
+    /* width: 100%; */
     height: 10vh;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    border-bottom: 1px dashed;
+    border-radius: 10px;
+    margin: 4px 4px;
+    background-color: rgb(251 234 234);
+    /* border-bottom: 1px dashed; */
 }
 
 </style>

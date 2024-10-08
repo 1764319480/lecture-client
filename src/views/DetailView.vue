@@ -65,6 +65,25 @@ async function checkSign () {
     sign.value = '';
     dialogFormVisible.value = false;
 }
+// 按钮颜色动态变化
+const btn_color = (lec_id) => {
+  if (userData.user.lec_order.includes(lec_id)
+    || userData.user.lec_finish.includes(lec_id))
+    return 'success';
+  else if (userData.user.lec_timeout.includes(lec_id))
+    return 'danger';
+  else return 'primary';
+}
+// 按钮文字动态变化
+const btn_text = (lec_id) => {
+  if (userData.user.lec_order.includes(lec_id))
+    return '已预约';
+  else if (userData.user.lec_finish.includes(lec_id))
+    return '已完成';
+  else if (userData.user.lec_timeout.includes(lec_id))
+    return '已超时';
+  else return '预约';
+}
 </script>
 
 <template>
@@ -110,12 +129,10 @@ async function checkSign () {
                     </template>
                 </el-dialog>
                 &nbsp;
-                <el-button :type="userData.user.lec_order?.includes(lectureDetails.lec_id) ? '' : 'primary'"
+                <el-button :type="btn_color(lectureDetails.lec_id)"
                     @click="centerDialogVisible1 = true" :disabled="lectureDetails.lec_status == 1 ? false : true"
                     style="width: 4.5vw; font-size: 1.5vw;">
-                    {{ userData.user.lec_order?.includes(lectureDetails.lec_id)
-                        || userData.user.lec_finish?.includes(lectureDetails.lec_id)
-                        || userData.user.lec_timeout?.includes(lectureDetails.lec_id) ? '已预约' : '预约' }}
+                    {{ btn_text(lectureDetails.lec_id)}}
                 </el-button>
                 <el-dialog v-model="centerDialogVisible1" title="温馨提示" width="500" center>
                     <span>

@@ -44,7 +44,7 @@
   z-index: 99;
   width: 70%;
   height: 8%;
-  background-color: rgb(228, 213, 216);
+  background-color: #dfdfdf;
   display: flex;
   justify-content: space-between;
   border-bottom: 2px solid white;
@@ -62,7 +62,7 @@
 #nav-bottom p {
   font-size: 3.5vw;
   align-self: center;
-  color: rgb(131, 131, 244);
+  color: rgb(23 44 213);
   font-weight: bold;
   font-family: serif;
 }
