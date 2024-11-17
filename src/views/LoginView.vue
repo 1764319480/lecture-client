@@ -188,15 +188,15 @@ onMounted(() => {
         inputs.forEach(node => {
             node.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
-                    if(status.value === true && status2.value === true) {
-                       login();
-                       return;
+                    if (status.value === true && status2.value === true) {
+                        login();
+                        return;
                     }
-                    if(status.value === true && status2.value ===false) {
+                    if (status.value === true && status2.value === false) {
                         changePwd();
                         return;
                     }
-                    if(status.value === false) {
+                    if (status.value === false) {
                         logon();
                         return;
                     }
@@ -209,21 +209,25 @@ onMounted(() => {
 </script>
 
 <template>
-    <div id="login">
+    <div class="login">
         <p style="color: white;position: fixed;top: 5vw;text-align: center;font-size: 7vmin;font-family: cursive;">
             高校讲座预约系统</p>
-        <div id="left"></div>
-        <div id="loginForm" v-show="status">
+        <div class="left"></div>
+        <div class="loginForm" v-show="status">
             <div v-show="status2">
                 <h2 style="text-align: center;">登录</h2>
                 <br>
                 <form action="">
-                    账号：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-input v-model="oldAccount" style="width: 20vw"
-                        placeholder="请输入手机号" clearable />
-                    <br><br>
-                    密码：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-input v-model="oldPassword" style="width: 20vw"
-                        type="password" placeholder="请输入密码" show-password />
-                    <!-- <br> -->
+                    <div>
+                        <p>账号：</p>
+                        <el-input v-model="oldAccount" style="width: 13.5vw" placeholder="请输入手机号" clearable />
+                    </div>
+                    <br>
+                    <div>
+                        <p>密码：</p>
+                        <el-input v-model="oldPassword" style="width: 13.5vw" type="password" placeholder="请输入密码"
+                            show-password />
+                    </div>
                     <div style="display: flex; justify-content: space-between; border-top: 8px solid white;">
                         <a @click="status = false" href="JavaScript: ;"
                             style="font-size: 10px;text-decoration: none;">没有账号？点击注册</a>
@@ -245,23 +249,30 @@ onMounted(() => {
                 <h2 style="text-align: center;">修改密码</h2>
                 <br>
                 <form action="">
-                    账号：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-input v-model="oldAccount" style="width: 20vw"
-                        placeholder="请输入手机号" clearable />
-                    <br><br>
+                    <div>
+                        <p>账号：</p>
+                        <el-input v-model="oldAccount" style="width: 13.5vw" placeholder="请输入手机号" clearable />
+                    </div>
+                    <br>
                     <div style="position: relative; display: flex; align-items: center;">
-                        验证码：&nbsp;&nbsp;&nbsp;<el-input v-model="idCode" style="width: 20vw"
-                            placeholder="请输入验证码"></el-input>
+                        验证码：<el-input v-model="idCode" style="width: 13.5vw" placeholder="请输入验证码"></el-input>
                         <a href="JavaScript: ;" @click="sendIdCode('修改密码')"
-                            style=" text-decoration: none; font-size: 1vw; position: absolute; right: 4px;">{{ timeText
+                            style=" text-decoration: none; font-size: calc(0.5vw + 2px); position: absolute; right: 4px;">{{
+                                timeText
                             }}</a>
                     </div>
                     <br>
-                    密码：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-input v-model="newPassword" style="width: 20vw"
-                        type="password" placeholder="请输入密码" show-password />
-                    <br><br>
-                    确认密码：<el-input v-model="newPasswords" style="width: 20vw" type="password" placeholder="请再次输入密码"
-                        show-password />
+                    <div>
+                        <p>密码：</p>
+                        <el-input v-model="newPassword" style="width: 13.5vw" type="password" placeholder="请输入密码"
+                            show-password />
+                    </div>
                     <br>
+                    <div>
+                        <p>确认密码：</p>
+                        <el-input v-model="newPasswords" style="width: 13.5vw" type="password" placeholder="请再次输入密码"
+                            show-password />
+                    </div>
                     <a @click="status2 = true" href="JavaScript: ;"
                         style="font-size: 10px;text-decoration: none;">返回登录</a>
                     <br><br>
@@ -270,37 +281,44 @@ onMounted(() => {
             </div>
 
         </div>
-        <div id="loginForm" v-show="!status">
-            <h2 style="text-align: center;">注册</h2>
-            <br>
-            <form action="">
-                账号：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-input v-model="newAccount" style="width: 20vw"
-                    placeholder="请输入手机号" clearable />
-                <br><br>
-                <div style="position: relative; display: flex; align-items: center;">
-                    验证码：&nbsp;&nbsp;&nbsp;<el-input v-model="idCode" style="width: 20vw"
-                        placeholder="请输入验证码"></el-input>
-                    <a href="JavaScript: ;" @click="sendIdCode('注册')"
-                        style=" text-decoration: none; font-size: 1vw; position: absolute; right: 4px;">{{ timeText
-                        }}</a>
-                </div>
+        <div class="loginForm" v-show="!status">
+            <div>
+                <h2 style="text-align: center;">注册</h2>
                 <br>
-                密码：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-input v-model="newPassword" style="width: 20vw"
-                    type="password" placeholder="请输入密码" show-password />
-                <br><br>
-                确认密码：<el-input v-model="newPasswords" style="width: 20vw" type="password" placeholder="请再次输入密码"
-                    show-password />
-                <br>
-                <a @click="status = true" href="JavaScript: ;"
-                    style="font-size: 10px;text-decoration: none;">已有账号？点击登录</a>
-                <br><br>
-                <el-button type="primary" style="width: 100%" @click="logon">注册</el-button>
-            </form>
+                <form action="">
+                    <div>
+                        <p>账号：</p>
+                        <el-input v-model="newAccount" style="width: 13.5vw" placeholder="请输入手机号" clearable />
+                    </div>
+                    <br>
+                    <div style="position: relative; display: flex; align-items: center;">
+                        验证码：<el-input v-model="idCode" style="width: 13.5vw" placeholder="请输入验证码"></el-input>
+                        <a href="JavaScript: ;" @click="sendIdCode('注册')"
+                            style=" text-decoration: none; font-size: calc(0.5vw + 2px); position: absolute; right: 4px;">{{
+                                timeText
+                            }}</a>
+                    </div>
+                    <br>
+                    <div>
+                        <p>密码：</p>
+                        <el-input v-model="newPassword" style="width: 13.5vw" type="password" placeholder="请输入密码"
+                            show-password />
+                    </div>
+                    <br>
+                    <div>
+                        <p>确认密码：</p>
+                        <el-input v-model="newPasswords" style="width: 13.5vw" type="password" placeholder="请再次输入密码"
+                            show-password />
+                    </div>
+                    <a @click="status = true" href="JavaScript: ;"
+                        style="font-size: 10px;text-decoration: none;">已有账号？点击登录</a>
+                    <br><br>
+                    <el-button type="primary" style="width: 100%" @click="logon">注册</el-button>
+                </form>
+            </div>
         </div>
         <div></div>
     </div>
-
-
 </template>
 
 <style scoped>
@@ -308,23 +326,29 @@ h1 {
     font-style: italic;
 }
 
-#left {
+.left {
     width: 20vw;
     height: 52vh;
     padding: 10px;
     background-image: url("@/assets/img/login_left.png");
 }
 
-#loginForm {
-
+.loginForm {
     background-color: white;
     width: max-content;
     height: 52vh;
     padding: 10px;
+    width: 20vw;
     /* border-radius: 5px; */
 }
 
-#login {
+.loginForm>div>form>div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login {
     width: 100%;
     height: 100%;
     background-size: 100% 100%;
